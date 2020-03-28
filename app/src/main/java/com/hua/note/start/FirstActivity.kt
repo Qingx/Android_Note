@@ -2,6 +2,7 @@ package com.hua.note.start
 
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.Handler
 import cn.wl.android.lib.ui.BaseActivity
 import com.hua.note.R
 import com.hua.note.config.MessageEvent
@@ -16,14 +17,11 @@ class FirstActivity : BaseActivity() {
         EventBus.getDefault().register(this)
 
         sharedPreferences = getSharedPreferences("LoginData", 0)
-        val editor: SharedPreferences.Editor = sharedPreferences!!.edit()
         val status: String? = sharedPreferences?.getString("loginStatus", "")
         if (status == "1") {
             MainActivity.start(applicationContext)
             finish()
         } else {
-            editor.putString("loginStatus", "1")
-            editor.apply()
             StartActivity.start(applicationContext)
             finish()
         }
@@ -44,3 +42,4 @@ class FirstActivity : BaseActivity() {
         }
     }
 }
+

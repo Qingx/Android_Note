@@ -35,7 +35,6 @@ class LoginFragment : BaseFragment() {
     }
 
     override fun initViewCreated(view: View?, savedInstanceState: Bundle?) {
-        EventBus.getDefault().register(this)
 
         userManager = UserDaoManager.getInstance(context)
         sharedPreferences = activity!!.getSharedPreferences("LoginData", 0)
@@ -75,6 +74,7 @@ class LoginFragment : BaseFragment() {
                     1 -> {
                         editor.putString("loginName", userName)
                         editor.putString("loginPwd", userPwd)
+                        editor.putString("loginStatus", "1")
                         if (checkbox_login.isChecked) {
                             editor.putBoolean("rememberCheck", true)
                         } else editor.putBoolean("rememberCheck", false)
