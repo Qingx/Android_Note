@@ -2,7 +2,6 @@ package com.hua.note.home
 
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import cn.wl.android.lib.ui.BaseActivity
@@ -11,7 +10,6 @@ import com.hua.note.config.MessageEvent
 import com.hua.note.create.CreateActivity
 import com.hua.note.data.NoteEntity
 import com.hua.note.data.UserDaoManager
-import com.hua.note.start.StartActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -21,7 +19,7 @@ class MainActivity : BaseActivity() {
     private var userDaoManager: UserDaoManager? = null
     private var list: List<NoteEntity>? = null
     private var adapter: NoteAdapter? = null
-    private var userName: String? = null
+    private val userName: String = "default"
 
     companion object {
         fun start(context: Context?) {
@@ -34,8 +32,6 @@ class MainActivity : BaseActivity() {
     override fun initViewCreated(savedInstanceState: Bundle?) {
         EventBus.getDefault().register(this)
 
-        val sharedPreferences: SharedPreferences? = getSharedPreferences("LoginData", 0)
-        userName = sharedPreferences?.getString("loginName", "default")
         userDaoManager = UserDaoManager.getInstance(applicationContext)
         list = userDaoManager?.findListByName(userName)
         adapter = object : NoteAdapter(applicationContext, list) {}
@@ -45,11 +41,6 @@ class MainActivity : BaseActivity() {
         img_top_create.setOnClickListener {
             CreateActivity.start(applicationContext)
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-        }
-
-        text_login.setOnClickListener {
-            StartActivity.start(applicationContext)
-            finish()
         }
 
         text_logout.setOnClickListener {
@@ -66,9 +57,7 @@ class MainActivity : BaseActivity() {
         when (messageEvent.message) {
             "updateAdapter" -> {
                 list = userDaoManager?.findListByName(userName)
-                adapter!!.notifyItemInserted(0)
                 adapter?.updateData(applicationContext, list)
-                recyler_notes!!.layoutManager!!.scrollToPosition(0)
             }
         }
     }

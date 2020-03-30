@@ -6,6 +6,8 @@ import android.widget.Toast;
 import java.util.Calendar;
 import java.util.Random;
 
+import cn.wl.android.lib.utils.Times;
+
 /**
  * Created by Iaovy on 2020/3/24 10:21
  *
@@ -64,5 +66,17 @@ public class Tools {
             }
         }
         return finalStr;
+    }
+
+    /**
+     * 获取年月日天时分星期
+     * E: 2020年03月20日 21:52 星期一
+     *
+     * @return
+     */
+    public static String getYMDTW() {
+        String date = DateFormat.yearMonthDayTime(Times.current());
+        String weekDay = getWeekDays();
+        return date + " " + weekDay;
     }
 }

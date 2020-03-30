@@ -9,7 +9,6 @@ import com.greendao.gen.DaoSession;
 import com.greendao.gen.NoteEntityDao;
 import com.greendao.gen.UserEntityDao;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -60,23 +59,23 @@ public class UserDaoManager {
         return userDao.insert(userEntity);
     }
 
-    public long insertNote(NoteEntity userEntity) {
-        return noteDao.insert(userEntity);
+    public long insertNote(NoteEntity noteEntity) {
+        return noteDao.insert(noteEntity);
     }
 
-    public void updateNote(String flag, String text, String time) {
-        NoteEntity noteEntity = noteDao.queryBuilder().where(NoteEntityDao.Properties.Flag.eq(flag)).build().unique();
-        noteEntity.setText(text);
-        noteEntity.setTime(time);
-        noteDao.update(noteEntity);
+    public void updateNote(Long id, String text, Long time) {
+        NoteEntity NoteEntity = noteDao.queryBuilder().where(NoteEntityDao.Properties.Id.eq(id)).build().unique();
+        NoteEntity.setText(text);
+        NoteEntity.setTime(time);
+        noteDao.update(NoteEntity);
     }
 
-    public void deleteNote(NoteEntity noteEntity) {
-        daoSession.delete(noteEntity);
+    public void deleteNote(NoteEntity NoteEntity) {
+        daoSession.delete(NoteEntity);
     }
 
-    public List<NoteEntity> findListByName(String userName) {
-        List<NoteEntity> oldList = noteDao.queryBuilder().where(NoteEntityDao.Properties.UserId.eq(userName)).build().list();
+    public List<NoteEntity> findListByName(String name) {
+        List<NoteEntity> oldList = noteDao.queryBuilder().where(NoteEntityDao.Properties.Name.eq(name)).build().list();
         Collections.reverse(oldList);
         return oldList;
     }
@@ -94,7 +93,7 @@ public class UserDaoManager {
         } else return 0;
     }
 
-    public NoteEntity findNoteByFlag(String flag) {
-        return noteDao.queryBuilder().where(NoteEntityDao.Properties.Flag.eq(flag)).build().unique();
+    public NoteEntity findNoteById(Long id) {
+        return noteDao.queryBuilder().where(NoteEntityDao.Properties.Id.eq(id)).build().unique();
     }
 }

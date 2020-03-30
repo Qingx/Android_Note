@@ -3,7 +3,6 @@ package com.hua.note.create
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -19,15 +18,15 @@ import kotlinx.android.synthetic.main.activity_create.*
 import org.greenrobot.eventbus.EventBus
 
 class CreateActivity : BaseActivity() {
-    var userDaoManager: UserDaoManager? = null
-    private var userName: String? = ""
-    private var flag: String? = ""
+    private var userDaoManager: UserDaoManager? = null
+    private var userName: String = "default"
+    private var id: Long? = null
 
     companion object {
-        fun start(context: Context?, flag: String) {
+        fun start(context: Context?, id: Long) {
             val intent = Intent(context, CreateActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            intent.putExtra("flag", flag)
+            intent.putExtra("id", id)
             context!!.startActivity(intent)
         }
 
@@ -41,24 +40,19 @@ class CreateActivity : BaseActivity() {
     @SuppressLint("SetTextI18n")
     override fun initViewCreated(savedInstanceState: Bundle?) {
         userDaoManager = UserDaoManager.getInstance(applicationContext)
-        val sharedPreferences: SharedPreferences? = getSharedPreferences("LoginData", 0)
-        userName = sharedPreferences?.getString("loginName", "default")
-        flag = intent?.getStringExtra("flag")
-        if (flag != null) {
-            val entity: NoteEntity = userDaoManager!!.findNoteByFlag(flag)
+        id = intent.getLongExtra("id", 0)
+        if (id != 0.toLong()) {
+            val entity: NoteEntity = userDaoManager!!.findNoteById(id)
             edit_text.setText(entity.text)
-            text_time.text = entity.time + "  |  " + entity.text.toCharArray().size + "字"
+            text_time.text =
+                DateFormat.yearMonthDayTime(entity.time) + "  |  " + entity.text.toCharArray().size + "字"
         } else {
-            val date: String = DateFormat.yearMonthDayTime(Times.current())
-            val weekDay: String = Tools.getWeekDays()
-            text_time.text = "$date $weekDay"
+            text_time.text = Tools.getYMDTW()
         }
 
         edit_text.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                val date: String = DateFormat.yearMonthDayTime(Times.current())
-                val weekDay: String = Tools.getWeekDays()
-                text_time.text = "$date $weekDay  |  " + edit_text.text.toString().trim()
+                text_time.text = Tools.getYMDTW() + "  |  " + edit_text.text.toString().trim()
                     .toCharArray().size + "字"
             }
 
@@ -80,27 +74,23 @@ class CreateActivity : BaseActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        val changeTime: String?
-        if (flag != null) {
-            val noteEntity: NoteEntity = userDaoManager!!.findNoteByFlag(flag)
+        val changeTime: Long?
+        if (id != 0.toLong()) {
+            val noteEntity: NoteEntity = userDaoManager!!.findNoteById(id)
             changeTime =
                 if (Tools.isWordChanged(noteEntity.text, edit_text.text.toString().trim())) {
-                    val date: String = DateFormat.yearMonthDayTime(Times.current())
-                    val weekDay: String = Tools.getWeekDays()
-                    "$date $weekDay"
+                    Times.current()
                 } else {
                     noteEntity.time
                 }
-            userDaoManager!!.updateNote(flag, edit_text.text.toString().trim(), changeTime)
+            userDaoManager!!.updateNote(id, edit_text.text.toString().trim(), changeTime)
         } else {
             if (edit_text.text.toString().trim() != "") {
-                val date: String = DateFormat.yearMonthDayTime(Times.current())
-                val weekDay: String = Tools.getWeekDays()
-                val time = "$date $weekDay"
                 val noteEntity = NoteEntity(
-                    Times.current().toString().trim(),
+                    Times.current(),
+                    Times.current(),
                     edit_text.text.toString().trim(),
-                    time,
+                    "default",
                     userName
                 )
                 userDaoManager!!.insertNote(noteEntity)

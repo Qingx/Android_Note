@@ -44,7 +44,6 @@
         android:theme="@style/TranslucentTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".create.CreateActivity" />
-        <activity android:name=".start.FirstActivity" />
         <activity
             android:name=".start.StartActivity"
             android:theme="@style/TranslucentTheme" />

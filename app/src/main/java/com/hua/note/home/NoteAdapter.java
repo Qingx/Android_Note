@@ -1,5 +1,6 @@
 package com.hua.note.home;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hua.note.R;
+import com.hua.note.config.DateFormat;
 import com.hua.note.config.Tools;
 import com.hua.note.create.CreateActivity;
 import com.hua.note.data.NoteEntity;
@@ -53,12 +55,13 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ItemViewHolder
         return new ItemViewHolder(v);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
         holder.text.setText(Tools.cutStr(entities.get(position).getText(), 16));
-        holder.time.setText(entities.get(position).getTime());
+        holder.time.setText(DateFormat.yearMonthDayTime(entities.get(position).getTime())+" "+Tools.getWeekDays());
         holder.itemView.setOnClickListener(v -> {
-                    CreateActivity.Companion.start(context, entities.get(position).getFlag());
+                    CreateActivity.Companion.start(context, entities.get(position).getId());
                     ((BaseActivity) v.getContext()).overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 }
         );
