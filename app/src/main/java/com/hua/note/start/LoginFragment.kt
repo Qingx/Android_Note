@@ -53,7 +53,7 @@ class LoginFragment : BaseFragment() {
         }
         text_create.setOnClickListener {
             userVisibleHint = isVisible
-            EventBus.getDefault().post(MessageEvent("toSign"))
+            EventBus.getDefault().post(MessageEvent("toSign", ""))
         }
         edit_login_account.onFocusChangeListener =
             View.OnFocusChangeListener { _, hasFocus -> layout_login_account.isPressed = hasFocus }

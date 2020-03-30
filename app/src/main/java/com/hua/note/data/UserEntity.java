@@ -1,13 +1,9 @@
 package com.hua.note.data;
 
-import com.hua.note.config.NoteConverter;
-
-import org.greenrobot.greendao.annotation.Convert;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Property;
 
-import java.util.ArrayList;
 import org.greenrobot.greendao.annotation.Generated;
 
 /**

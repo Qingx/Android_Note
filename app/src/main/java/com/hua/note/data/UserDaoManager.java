@@ -63,6 +63,17 @@ public class UserDaoManager {
         return noteDao.insert(userEntity);
     }
 
+    public void updateNote(String flag, String text, String time) {
+        NoteEntity noteEntity = noteDao.queryBuilder().where(NoteEntityDao.Properties.Flag.eq(flag)).build().unique();
+        noteEntity.setText(text);
+        noteEntity.setTime(time);
+        noteDao.update(noteEntity);
+    }
+
+    public void deleteNote(NoteEntity noteEntity) {
+        daoSession.delete(noteEntity);
+    }
+
     public List<NoteEntity> findListByName(String userName) {
         return noteDao.queryBuilder().where(NoteEntityDao.Properties.UserId.eq(userName)).build().list();
     }
@@ -71,10 +82,6 @@ public class UserDaoManager {
         if (userDao.queryBuilder().where(UserEntityDao.Properties.UserName.eq(userName)).build().unique() != null) {
             return 1;
         } else return 0;
-    }
-
-    public UserEntity getUserByName(String userName) {
-        return userDao.queryBuilder().where(UserEntityDao.Properties.UserName.eq(userName)).build().unique();
     }
 
     public int isPwdRightByName(String userName, String userPwd) {

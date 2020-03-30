@@ -6,9 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".create.CreateActivity">
 
-    <TextView
+    <EditText
         android:id="@+id/text_text"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        app:layout_constraintWidth_percent="0.6"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@id/text_exit"
         app:layout_constraintLeft_toLeftOf="parent"

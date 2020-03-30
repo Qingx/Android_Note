@@ -35,4 +35,8 @@ public class Tools {
         }
         return weekDays[week];
     }
+
+    public static boolean isWordChanged(String oldString, String newString) {
+        return !oldString.equals(newString);
+    }
 }

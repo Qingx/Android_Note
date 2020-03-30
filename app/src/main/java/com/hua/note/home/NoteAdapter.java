@@ -12,8 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hua.note.R;
+import com.hua.note.config.MessageEvent;
 import com.hua.note.create.CreateActivity;
 import com.hua.note.data.NoteEntity;
+import com.hua.note.data.UserDaoManager;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -25,6 +29,7 @@ import java.util.List;
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ItemViewHolder> {
     private List<NoteEntity> entities;
     private Context context;
+    private UserDaoManager userDaoManager;
 
     public NoteAdapter(Context context, List<NoteEntity> entities) {
         this.context = context;
@@ -40,6 +45,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ItemViewHolder
     @NonNull
     @Override
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        userDaoManager = UserDaoManager.getInstance(context);
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recyler_note, parent, false);
         return new ItemViewHolder(v);
     }
@@ -49,6 +55,13 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ItemViewHolder
         holder.text.setText(entities.get(position).getText());
         holder.time.setText(entities.get(position).getTime());
         holder.itemView.setOnClickListener(v -> CreateActivity.Companion.start(context, entities.get(position).getFlag()));
+        holder.itemView.setOnLongClickListener(v -> {
+            userDaoManager.deleteNote(entities.get(position));
+            entities.remove(position);
+            notifyItemRemoved(position);
+            notifyDataSetChanged();
+            return false;
+        });
     }
 
     @Override
