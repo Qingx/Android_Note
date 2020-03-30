@@ -1,23 +1,22 @@
 package com.hua.note.home;
 
+import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hua.note.R;
-import com.hua.note.config.MessageEvent;
 import com.hua.note.create.CreateActivity;
 import com.hua.note.data.NoteEntity;
 import com.hua.note.data.UserDaoManager;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -56,10 +55,16 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ItemViewHolder
         holder.time.setText(entities.get(position).getTime());
         holder.itemView.setOnClickListener(v -> CreateActivity.Companion.start(context, entities.get(position).getFlag()));
         holder.itemView.setOnLongClickListener(v -> {
-            userDaoManager.deleteNote(entities.get(position));
-            entities.remove(position);
-            notifyItemRemoved(position);
-            notifyDataSetChanged();
+            new AlertDialog.Builder(v.getContext())
+                    .setMessage("删除这条便签")
+                    .setNegativeButton("取消", (dialog, which) -> { })
+                    .setPositiveButton("删除", (dialog, which) -> {
+                        userDaoManager.deleteNote(entities.get(position));
+                        entities.remove(entities.get(position));
+                        notifyItemRemoved(position);
+                        notifyDataSetChanged();
+                    })
+                    .create().show();
             return false;
         });
     }

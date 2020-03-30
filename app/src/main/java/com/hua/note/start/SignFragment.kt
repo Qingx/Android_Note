@@ -36,7 +36,7 @@ class SignFragment : BaseFragment() {
         userManager = UserDaoManager.getInstance(context)
         layout_sign.setOnClickListener { sign() }
         text_toLogin.setOnClickListener {
-            EventBus.getDefault().post(MessageEvent("toLogin", ""))
+            EventBus.getDefault().post(MessageEvent("toLogin"))
             userVisibleHint = isVisible
         }
 
@@ -59,7 +59,7 @@ class SignFragment : BaseFragment() {
                     val newUser = object : UserEntity(userName, userPwd) {}
                     userManager!!.insert(newUser)
                     Tools.myToast(context, "注册成功")
-                    EventBus.getDefault().post(MessageEvent("toLogin", ""))
+                    EventBus.getDefault().post(MessageEvent("toLogin"))
                 }
             }
         }
@@ -79,24 +79,5 @@ class SignFragment : BaseFragment() {
             return false
         }
         return true
-    }
-
-    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
-        super.setUserVisibleHint(isVisibleToUser)
-        if (edit_sign_account != null) {
-            edit_sign_account.setText("")
-            edit_sign_password.setText("")
-            edit_sign_confirm.setText("")
-        }
-        if (edit_sign_password != null) {
-            edit_sign_account.setText("")
-            edit_sign_password.setText("")
-            edit_sign_confirm.setText("")
-        }
-        if (edit_sign_confirm != null) {
-            edit_sign_account.setText("")
-            edit_sign_password.setText("")
-            edit_sign_confirm.setText("")
-        }
     }
 }

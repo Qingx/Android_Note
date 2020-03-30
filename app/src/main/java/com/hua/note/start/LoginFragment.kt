@@ -53,7 +53,7 @@ class LoginFragment : BaseFragment() {
         }
         text_create.setOnClickListener {
             userVisibleHint = isVisible
-            EventBus.getDefault().post(MessageEvent("toSign", ""))
+            EventBus.getDefault().post(MessageEvent("toSign"))
         }
         edit_login_account.onFocusChangeListener =
             View.OnFocusChangeListener { _, hasFocus -> layout_login_account.isPressed = hasFocus }
@@ -97,17 +97,5 @@ class LoginFragment : BaseFragment() {
             return false
         }
         return true
-    }
-
-    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
-        super.setUserVisibleHint(isVisibleToUser)
-        if (edit_login_account != null) {
-            edit_login_account.setText("")
-            edit_login_password.setText("")
-        }
-        if (edit_login_password != null) {
-            edit_login_account.setText("")
-            edit_login_password.setText("")
-        }
     }
 }

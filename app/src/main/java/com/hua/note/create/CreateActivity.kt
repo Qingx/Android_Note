@@ -68,7 +68,7 @@ class CreateActivity : BaseActivity() {
                 )
                 userDaoManager!!.insertNote(noteEntity)
             }
-            EventBus.getDefault().post(MessageEvent("updateAdapter",""))
+            EventBus.getDefault().post(MessageEvent("updateAdapter"))
             onBackPressed()
         }
     }
