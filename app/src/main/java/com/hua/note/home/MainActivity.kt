@@ -1,5 +1,6 @@
 package com.hua.note.home
 
+import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -44,6 +45,7 @@ class MainActivity : BaseActivity() {
 
         img_top_create.setOnClickListener {
             CreateActivity.start(applicationContext)
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         }
 
         text_login.setOnClickListener {

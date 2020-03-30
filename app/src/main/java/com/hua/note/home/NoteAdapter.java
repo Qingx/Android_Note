@@ -14,11 +14,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hua.note.R;
+import com.hua.note.config.Tools;
 import com.hua.note.create.CreateActivity;
 import com.hua.note.data.NoteEntity;
 import com.hua.note.data.UserDaoManager;
 
 import java.util.List;
+
+import cn.wl.android.lib.ui.BaseActivity;
 
 /**
  * Created by Iaovy on 2020/3/27 14:37
@@ -51,13 +54,18 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ItemViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
-        holder.text.setText(entities.get(position).getText());
+        holder.text.setText(Tools.cutStr(entities.get(position).getText(), 16));
         holder.time.setText(entities.get(position).getTime());
-        holder.itemView.setOnClickListener(v -> CreateActivity.Companion.start(context, entities.get(position).getFlag()));
+        holder.itemView.setOnClickListener(v -> {
+                    CreateActivity.Companion.start(context, entities.get(position).getFlag());
+                    ((BaseActivity) v.getContext()).overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                }
+        );
         holder.itemView.setOnLongClickListener(v -> {
             new AlertDialog.Builder(v.getContext())
                     .setMessage("删除这条便签")
-                    .setNegativeButton("取消", (dialog, which) -> { })
+                    .setNegativeButton("取消", (dialog, which) -> {
+                    })
                     .setPositiveButton("删除", (dialog, which) -> {
                         userDaoManager.deleteNote(entities.get(position));
                         entities.remove(entities.get(position));

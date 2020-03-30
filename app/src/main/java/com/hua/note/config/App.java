@@ -1,8 +1,11 @@
 package com.hua.note.config;
 
+import android.app.Activity;
 import android.content.Context;
 
 import androidx.multidex.MultiDexApplication;
+
+import java.util.List;
 
 import cn.wl.android.lib.config.WLConfig;
 
