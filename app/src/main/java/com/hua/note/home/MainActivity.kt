@@ -1,6 +1,5 @@
 package com.hua.note.home
 
-import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -8,12 +7,11 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import cn.wl.android.lib.ui.BaseActivity
 import com.hua.note.R
-import com.hua.note.config.*
+import com.hua.note.config.MessageEvent
 import com.hua.note.create.CreateActivity
 import com.hua.note.data.NoteEntity
 import com.hua.note.data.UserDaoManager
 import com.hua.note.start.StartActivity
-
 import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -28,6 +26,7 @@ class MainActivity : BaseActivity() {
     companion object {
         fun start(context: Context?) {
             val intent = Intent(context, MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             context!!.startActivity(intent)
         }
     }
@@ -40,8 +39,8 @@ class MainActivity : BaseActivity() {
         userDaoManager = UserDaoManager.getInstance(applicationContext)
         list = userDaoManager?.findListByName(userName)
         adapter = object : NoteAdapter(applicationContext, list) {}
-        recyler_notes.layoutManager = object : LinearLayoutManager(this) {}
         recyler_notes.adapter = adapter
+        recyler_notes.layoutManager = object : LinearLayoutManager(this) {}
 
         img_top_create.setOnClickListener {
             CreateActivity.start(applicationContext)
@@ -67,7 +66,9 @@ class MainActivity : BaseActivity() {
         when (messageEvent.message) {
             "updateAdapter" -> {
                 list = userDaoManager?.findListByName(userName)
+                adapter!!.notifyItemInserted(0)
                 adapter?.updateData(applicationContext, list)
+                recyler_notes!!.layoutManager!!.scrollToPosition(0)
             }
         }
     }

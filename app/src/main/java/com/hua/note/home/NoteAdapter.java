@@ -44,6 +44,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ItemViewHolder
         notifyDataSetChanged();
     }
 
+
     @NonNull
     @Override
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

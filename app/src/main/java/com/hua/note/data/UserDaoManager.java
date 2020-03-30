@@ -10,6 +10,7 @@ import com.greendao.gen.NoteEntityDao;
 import com.greendao.gen.UserEntityDao;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -75,7 +76,9 @@ public class UserDaoManager {
     }
 
     public List<NoteEntity> findListByName(String userName) {
-        return noteDao.queryBuilder().where(NoteEntityDao.Properties.UserId.eq(userName)).build().list();
+        List<NoteEntity> oldList = noteDao.queryBuilder().where(NoteEntityDao.Properties.UserId.eq(userName)).build().list();
+        Collections.reverse(oldList);
+        return oldList;
     }
 
     public int findUserByName(String userName) {

@@ -26,12 +26,14 @@ class CreateActivity : BaseActivity() {
     companion object {
         fun start(context: Context?, flag: String) {
             val intent = Intent(context, CreateActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             intent.putExtra("flag", flag)
             context!!.startActivity(intent)
         }
 
         fun start(context: Context?) {
             val intent = Intent(context, CreateActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             context!!.startActivity(intent)
         }
     }

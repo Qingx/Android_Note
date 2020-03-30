@@ -24,6 +24,7 @@ class StartActivity : BaseActivity() {
     companion object {
         fun start(context: Context?) {
             val intent = Intent(context, StartActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             context?.startActivity(intent)
         }
 
