@@ -6,20 +6,20 @@ import org.greenrobot.greendao.annotation.Property;
 import org.greenrobot.greendao.annotation.Generated;
 
 @Entity
-public class NoteEntity implements Comparable<NoteEntity> {
+public class StickyEntity implements Comparable<StickyEntity> {
     @Id
     private Long id;
-    @Property(nameInDb = "time")
+    @Property(nameInDb = "stickyTime")
     private Long time;
-    @Property(nameInDb = "text")
+    @Property(nameInDb = "stickyText")
     private String text;
-    @Property(nameInDb = "type")
+    @Property(nameInDb = "stickyType")
     private String type;
-    @Property(nameInDb = "name")
+    @Property(nameInDb = "stickyName")
     private String name;
 
-    @Generated(hash = 1838326690)
-    public NoteEntity(Long id, Long time, String text, String type, String name) {
+    @Generated(hash = 1812869811)
+    public StickyEntity(Long id, Long time, String text, String type, String name) {
         this.id = id;
         this.time = time;
         this.text = text;
@@ -27,8 +27,8 @@ public class NoteEntity implements Comparable<NoteEntity> {
         this.name = name;
     }
 
-    @Generated(hash = 734234824)
-    public NoteEntity() {
+    @Generated(hash = 1258311365)
+    public StickyEntity() {
     }
 
     public Long getId() {
@@ -72,7 +72,7 @@ public class NoteEntity implements Comparable<NoteEntity> {
     }
 
     @Override
-    public int compareTo(NoteEntity o) {
+    public int compareTo(StickyEntity o) {
         return o.getTime().compareTo(this.getTime());
     }
 }

@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import com.greendao.gen.DaoMaster;
 import com.greendao.gen.DaoSession;
 import com.greendao.gen.NoteEntityDao;
+import com.greendao.gen.StickyEntityDao;
 import com.greendao.gen.UserEntityDao;
 
 import java.util.Collections;
@@ -24,6 +25,7 @@ public class UserDaoManager {
     private DaoSession daoSession;
     private UserEntityDao userDao;
     private NoteEntityDao noteDao;
+    private StickyEntityDao stickyDao;
 
     @SuppressLint("StaticFieldLeak")
     private static UserDaoManager userDaoManager;
@@ -46,6 +48,7 @@ public class UserDaoManager {
         daoSession = daoMaster.newSession();
         userDao = daoSession.getUserEntityDao();
         noteDao = daoSession.getNoteEntityDao();
+        stickyDao = daoSession.getStickyEntityDao();
     }
 
     private SQLiteDatabase getWritableDatabase() {
@@ -64,21 +67,43 @@ public class UserDaoManager {
     }
 
     public void updateNote(Long id, String text, Long time) {
-        NoteEntity NoteEntity = noteDao.queryBuilder().where(NoteEntityDao.Properties.Id.eq(id)).build().unique();
-        NoteEntity.setText(text);
-        NoteEntity.setTime(time);
-        noteDao.update(NoteEntity);
+        NoteEntity noteEntity = noteDao.queryBuilder().where(NoteEntityDao.Properties.Id.eq(id)).build().unique();
+        noteEntity.setText(text);
+        noteEntity.setTime(time);
+        noteDao.update(noteEntity);
     }
 
-    public void deleteNote(NoteEntity NoteEntity) {
-        daoSession.delete(NoteEntity);
+    public void updateStickyNote(Long id, String text, Long time) {
+        StickyEntity stickyEntity = stickyDao.queryBuilder().where(StickyEntityDao.Properties.Id.eq(id)).build().unique();
+        stickyEntity.setText(text);
+        stickyEntity.setTime(time);
+        stickyDao.update(stickyEntity);
+    }
+
+    public void stickyNote(StickyEntity stickyEntity) {
+        stickyDao.insert(stickyEntity);
+    }
+
+    public void deleteNote(NoteEntity noteEntity) {
+        daoSession.delete(noteEntity);
+    }
+
+    public void deletesticky(StickyEntity stickyEntity) {
+        daoSession.delete(stickyEntity);
     }
 
     public List<NoteEntity> findListByName(String name) {
-        List<NoteEntity> oldList = noteDao.queryBuilder().where(NoteEntityDao.Properties.Name.eq(name)).build().list();
-        Collections.reverse(oldList);
-        return oldList;
+        List<NoteEntity> noteList = noteDao.queryBuilder().where(NoteEntityDao.Properties.Name.eq(name)).build().list();
+        Collections.sort(noteList);
+        return noteList;
     }
+
+    public List<StickyEntity> findStickyListByName(String name) {
+        List<StickyEntity> stickyList = stickyDao.queryBuilder().where(StickyEntityDao.Properties.Name.eq(name)).build().list();
+        Collections.sort(stickyList);
+        return stickyList;
+    }
+
 
     public int findUserByName(String userName) {
         if (userDao.queryBuilder().where(UserEntityDao.Properties.UserName.eq(userName)).build().unique() != null) {
@@ -95,5 +120,9 @@ public class UserDaoManager {
 
     public NoteEntity findNoteById(Long id) {
         return noteDao.queryBuilder().where(NoteEntityDao.Properties.Id.eq(id)).build().unique();
+    }
+
+    public StickyEntity findStickyNoteById(Long id) {
+        return stickyDao.queryBuilder().where(StickyEntityDao.Properties.Id.eq(id)).build().unique();
     }
 }

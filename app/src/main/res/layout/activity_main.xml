@@ -52,26 +52,18 @@
             app:layout_constraintHeight_percent="0.36"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/text_logout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="退出"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/text_login"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/text_login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="登录"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/text_logout"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyler_sticky"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/colorTransparent"
+        android:overScrollMode="never"
+        android:paddingHorizontal="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_top" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyler_notes"
@@ -83,6 +75,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout_top" />
+        app:layout_constraintTop_toBottomOf="@id/recyler_sticky" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

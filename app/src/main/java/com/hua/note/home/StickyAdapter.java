@@ -3,27 +3,21 @@ package com.hua.note.home;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hua.note.R;
 import com.hua.note.config.DateFormat;
-import com.hua.note.config.MessageEvent;
 import com.hua.note.config.Tools;
 import com.hua.note.create.CreateActivity;
-import com.hua.note.data.NoteEntity;
 import com.hua.note.data.StickyEntity;
 import com.hua.note.data.UserDaoManager;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -34,17 +28,17 @@ import cn.wl.android.lib.ui.BaseActivity;
  *
  * @email Cymbidium@outlook.com
  */
-public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ItemViewHolder> {
-    private List<NoteEntity> entities;
+public class StickyAdapter extends RecyclerView.Adapter<StickyAdapter.ItemViewHolder> {
+    private List<StickyEntity> entities;
     private Context context;
     private UserDaoManager userDaoManager;
 
-    public NoteAdapter(Context context, List<NoteEntity> entities) {
+    public StickyAdapter(Context context, List<StickyEntity> entities) {
         this.context = context;
         this.entities = entities;
     }
 
-    public void updateData(Context context, List<NoteEntity> entities) {
+    public void updateData(Context context, List<StickyEntity> entities) {
         this.context = context;
         this.entities = entities;
         notifyDataSetChanged();
@@ -54,7 +48,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ItemViewHolder
     @Override
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         userDaoManager = UserDaoManager.getInstance(context);
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recyler_note, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recyler_sticky, parent, false);
         return new ItemViewHolder(v);
     }
 
@@ -64,7 +58,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ItemViewHolder
         holder.text.setText(Tools.cutStr(entities.get(position).getText(), 16));
         holder.time.setText(DateFormat.yearMonthDayTime(entities.get(position).getTime()) + " " + Tools.getWeekDays());
         holder.itemView.setOnClickListener(v -> {
-                    CreateActivity.Companion.start(context, entities.get(position).getId(), "default");
+                    CreateActivity.Companion.start(context, entities.get(position).getId(),"sticky");
                     ((BaseActivity) v.getContext()).overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 }
         );
@@ -72,20 +66,12 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ItemViewHolder
             new AlertDialog.Builder(v.getContext())
                     .setMessage("删除这条便签")
                     .setNegativeButton("取消", (dialog, which) -> {
-                        /**
-                         * 置顶方法
-                         */
                     })
-                    .setPositiveButton("置顶", (dialog, which) -> {
-                        NoteEntity noteEntity = entities.get(position);
-                        StickyEntity stickyEntity = new StickyEntity(noteEntity.getId(), noteEntity.getTime(), noteEntity.getText()+"sticky", noteEntity.getType(), "sticky");
-                        userDaoManager.stickyNote(stickyEntity);
-
-                        userDaoManager.deleteNote(noteEntity);
-                        entities.remove(noteEntity);
+                    .setPositiveButton("删除", (dialog, which) -> {
+                        userDaoManager.deletesticky(entities.get(position));
+                        entities.remove(entities.get(position));
                         notifyItemRemoved(position);
                         notifyDataSetChanged();
-                        EventBus.getDefault().post(new MessageEvent("updateAdapter"));
                     })
                     .create().show();
             return false;
