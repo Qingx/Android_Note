@@ -4,9 +4,12 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -80,7 +83,10 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ItemViewHolder
             builder.setCancelable(true);
             AlertDialog dialog = builder.create();
             dialog.show();
-
+//            Window window = dialog.getWindow();
+//            WindowManager.LayoutParams params = window.getAttributes();
+//            params.gravity = Gravity.BOTTOM;
+//            window.setAttributes(params);
             /**
              * 置顶按钮
              */
