@@ -7,4 +7,6 @@
     <string name="to_login">已有账号</string>
     <string name="title_login">欢迎，登录以继续</string>
     <string name="title_sign">开始创建你的账号吧</string>
+    <string name="text_sticky">置顶这条便签</string>
+    <string name="text_remove">删除</string>
 </resources>
