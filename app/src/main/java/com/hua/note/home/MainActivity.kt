@@ -39,7 +39,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         val mergeList: MutableList<NoteEntity>? = stickyList
         if (defaultList != null) {
             mergeList!!.addAll(defaultList)
-            adapter = object : NoteAdapter(applicationContext, mergeList) {}
+            adapter = NoteAdapter(applicationContext, mergeList)
             recyler_notes.adapter = adapter
             recyler_notes.layoutManager = object : LinearLayoutManager(this) {}
         }
