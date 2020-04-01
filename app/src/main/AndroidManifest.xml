@@ -44,13 +44,7 @@
         android:theme="@style/TranslucentTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".search.SearchActivity"
-            android:theme="@style/TranslucentTheme" />
-        <activity
-            android:name=".create.CreateActivity"
-            android:theme="@style/TranslucentTheme" />
-        <activity
-            android:name=".home.MainActivity"
+            android:name=".home.StartActivity"
             android:theme="@style/TranslucentTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -58,6 +52,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".search.SearchActivity"
+            android:theme="@style/TranslucentTheme" />
+        <activity
+            android:name=".create.CreateActivity"
+            android:theme="@style/TranslucentTheme" />
+        <activity
+            android:name=".home.MainActivity"
+            android:theme="@style/TranslucentTheme" />
+
     </application>
 
 </manifest>
