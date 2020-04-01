@@ -1,12 +1,5 @@
 <resources>
     <string name="app_name">便签</string>
-    <string name="copyright_hua">Copyright©2020 Hua</string>
-    <string name="login">登&#160;&#160;录</string>
-    <string name="sign">注&#160;&#160;册</string>
-    <string name="to_sign">创建账号</string>
-    <string name="to_login">已有账号</string>
-    <string name="title_login">欢迎，登录以继续</string>
-    <string name="title_sign">开始创建你的账号吧</string>
     <string name="text_sticky">置顶这条便签</string>
     <string name="text_remove">删除</string>
 </resources>

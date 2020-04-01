@@ -55,17 +55,6 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyler_sticky"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@color/colorTransparent"
-        android:overScrollMode="never"
-        android:paddingHorizontal="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout_top" />
-
-    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyler_notes"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -75,6 +64,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/recyler_sticky" />
+        app:layout_constraintTop_toBottomOf="@id/layout_top" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

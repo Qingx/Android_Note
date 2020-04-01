@@ -45,9 +45,6 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".create.CreateActivity" />
         <activity
-            android:name=".start.StartActivity"
-            android:theme="@style/TranslucentTheme" />
-        <activity
             android:name=".home.MainActivity"
             android:theme="@style/TranslucentTheme">
             <intent-filter>

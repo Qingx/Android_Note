@@ -10,7 +10,6 @@ import com.hua.note.R
 import com.hua.note.config.MessageEvent
 import com.hua.note.create.CreateActivity
 import com.hua.note.data.NoteEntity
-import com.hua.note.data.StickyEntity
 import com.hua.note.data.UserDaoManager
 import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.EventBus
@@ -19,10 +18,7 @@ import org.greenrobot.eventbus.ThreadMode
 
 class MainActivity : BaseActivity(), View.OnClickListener {
     private var userDaoManager: UserDaoManager? = null
-    private var defaultList: List<NoteEntity>? = null
-    private var stickyList: List<StickyEntity>? = null
-    private var defaultAdapter: NoteAdapter? = null
-    private var stickyAdapter: StickyAdapter? = null
+    private var adapter: NoteAdapter? = null
     private val default: String = "default"
     private val sticky: String = "sticky"
 
@@ -38,23 +34,15 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         EventBus.getDefault().register(this)
 
         userDaoManager = UserDaoManager.getInstance(applicationContext)
-
-        /**
-         * 置顶列表
-         */
-        stickyList = userDaoManager?.findStickyListByName(sticky)
-        stickyAdapter = object : StickyAdapter(applicationContext, stickyList) {}
-        recyler_sticky.adapter = stickyAdapter
-        recyler_sticky.layoutManager = object : LinearLayoutManager(this) {}
-
-        /**
-         * 默认列表
-         */
-        defaultList = userDaoManager?.findListByName(default)
-        defaultAdapter = object : NoteAdapter(applicationContext, defaultList) {}
-        recyler_notes.adapter = defaultAdapter
-        recyler_notes.layoutManager = object : LinearLayoutManager(this) {}
-
+        val stickyList: MutableList<NoteEntity>? = userDaoManager?.findListByName(sticky)
+        val defaultList: MutableList<NoteEntity>? = userDaoManager?.findListByName(default)
+        val mergeList: MutableList<NoteEntity>? = stickyList
+        if (defaultList != null) {
+            mergeList!!.addAll(defaultList)
+            adapter = object : NoteAdapter(applicationContext, mergeList) {}
+            recyler_notes.adapter = adapter
+            recyler_notes.layoutManager = object : LinearLayoutManager(this) {}
+        }
         img_top_create.setOnClickListener(this)
     }
 
@@ -66,16 +54,10 @@ class MainActivity : BaseActivity(), View.OnClickListener {
     fun updateAdapter(messageEvent: MessageEvent) {
         when (messageEvent.message) {
             "updateAdapter" -> {
-                /**
-                 * 默认便签列表
-                 */
-                defaultList = userDaoManager?.findListByName(default)
-                defaultAdapter?.updateData(applicationContext, defaultList)
-                /**
-                 * 置顶便签列表
-                 */
-                stickyList = userDaoManager?.findStickyListByName(sticky)
-                stickyAdapter?.updateData(applicationContext, stickyList)
+                val stickyList: MutableList<NoteEntity> = userDaoManager!!.findListByName(sticky)
+                val defaultList: MutableList<NoteEntity> = userDaoManager!!.findListByName(default)
+                stickyList.addAll(defaultList)
+                adapter!!.updateData(applicationContext, stickyList)
             }
         }
     }
