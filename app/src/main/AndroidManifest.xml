@@ -43,7 +43,12 @@
         android:supportsRtl="true"
         android:theme="@style/TranslucentTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".create.CreateActivity" />
+        <activity
+            android:name=".search.SearchActivity"
+            android:theme="@style/TranslucentTheme" />
+        <activity
+            android:name=".create.CreateActivity"
+            android:theme="@style/TranslucentTheme" />
         <activity
             android:name=".home.MainActivity"
             android:theme="@style/TranslucentTheme">

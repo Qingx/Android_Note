@@ -2,4 +2,6 @@
     <string name="app_name">便签</string>
     <string name="text_sticky">置顶这条便签</string>
     <string name="text_remove">删除</string>
+    <string name="text_search_main">点击输入关键词搜索</string>
+    <string name="text_result">无搜索结果</string>
 </resources>

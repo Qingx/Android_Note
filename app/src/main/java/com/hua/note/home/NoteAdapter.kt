@@ -17,7 +17,6 @@ import com.hua.note.config.DateFormat
 import com.hua.note.config.MessageEvent
 import com.hua.note.config.Tools.Companion.cutStr
 import com.hua.note.config.Tools.Companion.getWeekDays
-import com.hua.note.create.CreateActivity
 import com.hua.note.create.CreateActivity.Companion.start
 import com.hua.note.data.NoteEntity
 import com.hua.note.data.UserDaoManager
@@ -32,6 +31,11 @@ class NoteAdapter(context: Context, entities: MutableList<NoteEntity>) :
     private var entities: MutableList<NoteEntity>
     private var context: Context
     private var userDaoManager: UserDaoManager? = null
+
+    init {
+        this.context = context
+        this.entities = entities
+    }
 
     fun updateData(context: Context, entities: MutableList<NoteEntity>) {
         this.context = context
@@ -123,10 +127,5 @@ class NoteAdapter(context: Context, entities: MutableList<NoteEntity>) :
         val text: TextView = view.findViewById(R.id.text_item_name)
         val time: TextView = view.findViewById(R.id.text_item_time)
         val stickyView: View = view.findViewById(R.id.view_sticky)
-    }
-
-    init {
-        this.context = context
-        this.entities = entities
     }
 }

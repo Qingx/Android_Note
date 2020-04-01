@@ -11,7 +11,9 @@ import com.hua.note.config.MessageEvent
 import com.hua.note.create.CreateActivity
 import com.hua.note.data.NoteEntity
 import com.hua.note.data.UserDaoManager
+import com.hua.note.search.SearchActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import me.everything.android.ui.overscroll.OverScrollDecoratorHelper
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -41,9 +43,16 @@ class MainActivity : BaseActivity(), View.OnClickListener {
             mergeList!!.addAll(defaultList)
             adapter = NoteAdapter(applicationContext, mergeList)
             recyler_notes.adapter = adapter
-            recyler_notes.layoutManager = object : LinearLayoutManager(this) {}
+            recyler_notes.layoutManager = object : LinearLayoutManager(applicationContext) {}
         }
         img_top_create.setOnClickListener(this)
+
+        OverScrollDecoratorHelper.setUpOverScroll(
+            recyler_notes,
+            OverScrollDecoratorHelper.ORIENTATION_VERTICAL
+        )
+
+        layout_search.setOnClickListener(this)
     }
 
     override fun getLayoutResource(): Any {
@@ -66,6 +75,10 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         when (v!!.id) {
             R.id.img_top_create -> {
                 CreateActivity.start(applicationContext)
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+            }
+            R.id.layout_search -> {
+                SearchActivity.start(applicationContext)
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
             }
         }

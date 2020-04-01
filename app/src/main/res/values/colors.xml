@@ -6,6 +6,10 @@
 
     <color name="colorMainWhite">#ffffff</color>
     <color name="colorBackGround">#f4f5f7</color>
+    <color name="colorSearchLayout">#f7f7f7</color>
+    <color name="colorSearchBack">#ecedef</color>
+    <color name="colorSearchHint">#b9b9b9</color>
+    <color name="mainSearchHint">#a5a5a7</color>
     <color name="colorText">#131313</color>
     <color name="colorHint">#bcbcbc</color>
     <color name="colorTransparent">#00000000</color>

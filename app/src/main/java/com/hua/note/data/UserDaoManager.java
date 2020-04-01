@@ -52,10 +52,23 @@ public class UserDaoManager {
         return helper.getWritableDatabase();
     }
 
+    /**
+     * 新建note
+     *
+     * @param noteEntity
+     * @return
+     */
     public long insertNote(NoteEntity noteEntity) {
         return noteDao.insert(noteEntity);
     }
 
+    /**
+     * 更新note
+     *
+     * @param id
+     * @param text
+     * @param time
+     */
     public void updateNote(Long id, String text, Long time) {
         NoteEntity noteEntity = noteDao.queryBuilder().where(NoteEntityDao.Properties.Id.eq(id)).build().unique();
         noteEntity.setText(text);
@@ -63,6 +76,12 @@ public class UserDaoManager {
         noteDao.update(noteEntity);
     }
 
+    /**
+     * 置顶note
+     *
+     * @param id
+     * @param time
+     */
     public void stickyNote(Long id, Long time) {
         NoteEntity noteEntity = noteDao.queryBuilder().where(NoteEntityDao.Properties.Id.eq(id)).build().unique();
         noteEntity.setTime(time);
@@ -70,6 +89,12 @@ public class UserDaoManager {
         noteDao.update(noteEntity);
     }
 
+    /**
+     * 取消置顶note
+     *
+     * @param id
+     * @param time
+     */
     public void deleteSticky(Long id, Long time) {
         NoteEntity noteEntity = noteDao.queryBuilder().where(NoteEntityDao.Properties.Id.eq(id)).build().unique();
         noteEntity.setTime(time);
@@ -77,6 +102,11 @@ public class UserDaoManager {
         noteDao.update(noteEntity);
     }
 
+    /**
+     * 删除note
+     *
+     * @param noteEntity
+     */
     public void deleteNote(NoteEntity noteEntity) {
         daoSession.delete(noteEntity);
     }
@@ -89,5 +119,17 @@ public class UserDaoManager {
 
     public NoteEntity findNoteById(Long id) {
         return noteDao.queryBuilder().where(NoteEntityDao.Properties.Id.eq(id)).build().unique();
+    }
+
+    /**
+     * 模糊查找
+     *
+     * @param text
+     * @return
+     */
+    public List<NoteEntity> findListLikeText(String text) {
+        List<NoteEntity> noteList = noteDao.queryBuilder().where(NoteEntityDao.Properties.Text.like("%"+text+"%")).build().list();
+        Collections.sort(noteList);
+        return noteList;
     }
 }
