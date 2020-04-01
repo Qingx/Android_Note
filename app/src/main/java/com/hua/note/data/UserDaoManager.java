@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import com.greendao.gen.DaoMaster;
 import com.greendao.gen.DaoSession;
 import com.greendao.gen.NoteEntityDao;
-import com.greendao.gen.UserEntityDao;
 
 import java.util.Collections;
 import java.util.List;
@@ -22,7 +21,6 @@ public class UserDaoManager {
     private Context context;
     private DaoMaster daoMaster;
     private DaoSession daoSession;
-    private UserEntityDao userDao;
     private NoteEntityDao noteDao;
 
     @SuppressLint("StaticFieldLeak")
@@ -44,7 +42,6 @@ public class UserDaoManager {
         helper = new DaoMaster.DevOpenHelper(context, "user_db", null);
         daoMaster = new DaoMaster(getWritableDatabase());
         daoSession = daoMaster.newSession();
-        userDao = daoSession.getUserEntityDao();
         noteDao = daoSession.getNoteEntityDao();
     }
 
@@ -53,10 +50,6 @@ public class UserDaoManager {
             helper = new DaoMaster.DevOpenHelper(context, "user_db", null);
         }
         return helper.getWritableDatabase();
-    }
-
-    public long insert(UserEntity userEntity) {
-        return userDao.insert(userEntity);
     }
 
     public long insertNote(NoteEntity noteEntity) {
@@ -77,7 +70,7 @@ public class UserDaoManager {
         noteDao.update(noteEntity);
     }
 
-    public void deletesticky(Long id, Long time) {
+    public void deleteSticky(Long id, Long time) {
         NoteEntity noteEntity = noteDao.queryBuilder().where(NoteEntityDao.Properties.Id.eq(id)).build().unique();
         noteEntity.setTime(time);
         noteEntity.setName("default");
@@ -88,24 +81,10 @@ public class UserDaoManager {
         daoSession.delete(noteEntity);
     }
 
-
     public List<NoteEntity> findListByName(String name) {
         List<NoteEntity> noteList = noteDao.queryBuilder().where(NoteEntityDao.Properties.Name.eq(name)).build().list();
         Collections.sort(noteList);
         return noteList;
-    }
-
-    public int findUserByName(String userName) {
-        if (userDao.queryBuilder().where(UserEntityDao.Properties.UserName.eq(userName)).build().unique() != null) {
-            return 1;
-        } else return 0;
-    }
-
-    public int isPwdRightByName(String userName, String userPwd) {
-        UserEntity user = userDao.queryBuilder().where(UserEntityDao.Properties.UserName.eq(userName)).build().unique();
-        if (user.getUserPwd().equals(userPwd)) {
-            return 1;
-        } else return 0;
     }
 
     public NoteEntity findNoteById(Long id) {

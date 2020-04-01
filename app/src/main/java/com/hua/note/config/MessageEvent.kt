@@ -10,5 +10,4 @@ class MessageEvent constructor(message: String) {
     init {
         this.message = message
     }
-
 }

@@ -98,7 +98,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ItemViewHolder
                     userDaoManager.stickyNote(noteEntity.getId(), Times.current());
                     EventBus.getDefault().post(new MessageEvent("updateAdapter"));
                 } else {
-                    userDaoManager.deletesticky(noteEntity.getId(), Times.current());
+                    userDaoManager.deleteSticky(noteEntity.getId(), Times.current());
                     EventBus.getDefault().post(new MessageEvent("updateAdapter"));
                 }
                 dialog.dismiss();
