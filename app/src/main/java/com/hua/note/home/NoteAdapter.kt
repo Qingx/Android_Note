@@ -61,9 +61,9 @@ class NoteAdapter(context: Context, entities: MutableList<NoteEntity>) :
         } else holder.stickyView.visibility = View.VISIBLE
 
         if (noteEntity.title == "") {
-            holder.text.text = cutStr(noteEntity.text, 16)
+            holder.text.text = cutStr(noteEntity.text.replace("", ""), 18)
         } else {
-            holder.text.text = noteEntity.title
+            holder.text.text = noteEntity.title.replace("", "")
         }
 
         holder.time.text =

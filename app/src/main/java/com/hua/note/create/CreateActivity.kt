@@ -92,22 +92,30 @@ class CreateActivity : BaseActivity(), View.OnClickListener {
              * 修改便签
              */
             val noteEntity: NoteEntity = userDaoManager!!.findNoteById(id)
-            changeTime =
-                if (Tools.isWordChanged(
-                        noteEntity.text,
-                        edit_text.text.toString().trim()
-                    ) && Tools.isWordChanged(noteEntity.title, edit_title.text.toString().trim())
-                ) {
-                    Times.current()
-                } else {
-                    noteEntity.time
-                }
-            userDaoManager!!.updateNote(
-                id,
-                edit_text.text.toString().trim(),
-                changeTime,
-                edit_title.text.toString().trim()
-            )
+            if (edit_title.text.toString().trim() != "" || edit_text.text.toString().trim() != "") {
+                changeTime =
+                    if (Tools.isWordChanged(
+                            noteEntity.text,
+                            edit_text.text.toString().trim()
+                        ) || Tools.isWordChanged(
+                            noteEntity.title,
+                            edit_title.text.toString().trim()
+                        )
+                    ) {
+                        Times.current()
+                    } else {
+                        noteEntity.time
+                    }
+                userDaoManager!!.updateNote(
+                    id,
+                    edit_text.text.toString().trim(),
+                    changeTime,
+                    edit_title.text.toString().trim()
+                )
+            } else {
+                userDaoManager!!.deleteNote(noteEntity)
+                EventBus.getDefault().post(MessageEvent("updateAdapter"))
+            }
         } else {
             /**
              * 新建便签
