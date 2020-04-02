@@ -17,14 +17,18 @@ public class NoteEntity implements Comparable<NoteEntity> {
     private String type;
     @Property(nameInDb = "name")
     private String name;
+    @Property(nameInDb = "title")
+    private String title;
 
-    @Generated(hash = 1838326690)
-    public NoteEntity(Long id, Long time, String text, String type, String name) {
+    @Generated(hash = 1867373649)
+    public NoteEntity(Long id, Long time, String text, String type, String name,
+                      String title) {
         this.id = id;
         this.time = time;
         this.text = text;
         this.type = type;
         this.name = name;
+        this.title = title;
     }
 
     @Generated(hash = 734234824)
@@ -71,8 +75,18 @@ public class NoteEntity implements Comparable<NoteEntity> {
         this.name = name;
     }
 
+    public String getTitle() {
+        return this.title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     @Override
     public int compareTo(NoteEntity o) {
         return o.getTime().compareTo(this.getTime());
     }
+
+
 }

@@ -19,15 +19,17 @@ class StartActivity : AppCompatActivity() {
             "0" -> {
                 val userDaoManager: UserDaoManager = UserDaoManager.getInstance(applicationContext)
                 val defaultEntity =
-                    NoteEntity(Times.current(), Times.current(), "欢迎使用便签", "default", "default")
+                    NoteEntity(Times.current(), Times.current(), "欢迎使用便签", "default", "default","欢迎使用便签")
                 userDaoManager.insertNote(defaultEntity)
                 val editor: SharedPreferences.Editor? = sharedPreferences.edit()
                 editor!!.putString("loginStatus", "1")
                 editor.apply()
                 MainActivity.start(applicationContext)
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
             }
             "1" -> {
                 MainActivity.start(applicationContext)
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
             }
         }
     }

@@ -75,11 +75,11 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         when (v!!.id) {
             R.id.img_top_create -> {
                 CreateActivity.start(applicationContext)
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+//                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
             }
             R.id.layout_search -> {
                 SearchActivity.start(applicationContext)
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+//                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
             }
         }
     }

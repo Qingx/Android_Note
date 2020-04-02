@@ -58,6 +58,8 @@
                 android:layout_marginLeft="12dp"
                 android:background="@null"
                 android:hint="搜索"
+                android:maxEms="16"
+                android:singleLine="true"
                 android:textColor="@color/colorText"
                 android:textColorHint="@color/colorSearchHint"
                 android:textSize="16sp"
@@ -80,9 +82,9 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyler_search"
-            android:layout_marginTop="12dp"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginTop="12dp"
             android:overScrollMode="never"
             android:paddingHorizontal="14dp"
             app:layout_constraintBottom_toBottomOf="parent"

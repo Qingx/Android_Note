@@ -9,9 +9,11 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import cn.wl.android.lib.ui.BaseActivity
 import com.hua.note.R
+import com.hua.note.data.NoteEntity
 import com.hua.note.data.UserDaoManager
 import com.hua.note.home.NoteAdapter
 import kotlinx.android.synthetic.main.activity_search.*
+import java.util.*
 
 class SearchActivity : BaseActivity(), View.OnClickListener {
     private var userDaoManager: UserDaoManager? = null
@@ -40,17 +42,24 @@ class SearchActivity : BaseActivity(), View.OnClickListener {
                 if (edit_search.text.toString().trim().toCharArray().isNotEmpty()) {
                     val noteList =
                         userDaoManager!!.findListLikeText(edit_search.text.toString().trim())
+                    val noteTitleList =
+                        userDaoManager!!.findListLikeTitle(edit_search.text.toString().trim())
                     /**
-                     * noteList.size==0表示没有找到
+                     * size==0表示没有找到
                      */
-                    if (noteList.size != 0) {
-                        adapter = NoteAdapter(applicationContext, noteList)
+                    if (noteTitleList.size != 0 || noteList.size != 0) {
+                        val mergeList: MutableList<NoteEntity>? = noteTitleList
+                        mergeList!!.removeAll(noteList)
+                        mergeList.addAll(noteList)
+                        mergeList.sort()
+                        adapter = NoteAdapter(applicationContext, mergeList)
                         recyler_search.visibility = View.VISIBLE
                         recyler_search.adapter = adapter
                         recyler_search.layoutManager =
                             object : LinearLayoutManager(applicationContext) {}
                         text_result.visibility = View.INVISIBLE
                     } else {
+                        recyler_search.visibility = View.INVISIBLE
                         text_result.visibility = View.VISIBLE
                     }
                 } else {

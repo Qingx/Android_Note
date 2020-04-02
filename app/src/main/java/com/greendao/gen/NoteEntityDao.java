@@ -29,6 +29,7 @@ public class NoteEntityDao extends AbstractDao<NoteEntity, Long> {
         public final static Property Text = new Property(2, String.class, "text", false, "text");
         public final static Property Type = new Property(3, String.class, "type", false, "type");
         public final static Property Name = new Property(4, String.class, "name", false, "name");
+        public final static Property Title = new Property(5, String.class, "title", false, "title");
     }
 
 
@@ -48,7 +49,8 @@ public class NoteEntityDao extends AbstractDao<NoteEntity, Long> {
                 "\"time\" INTEGER," + // 1: time
                 "\"text\" TEXT," + // 2: text
                 "\"type\" TEXT," + // 3: type
-                "\"name\" TEXT);"); // 4: name
+                "\"name\" TEXT," + // 4: name
+                "\"title\" TEXT);"); // 5: title
     }
 
     /** Drops the underlying database table. */
@@ -85,6 +87,11 @@ public class NoteEntityDao extends AbstractDao<NoteEntity, Long> {
         if (name != null) {
             stmt.bindString(5, name);
         }
+ 
+        String title = entity.getTitle();
+        if (title != null) {
+            stmt.bindString(6, title);
+        }
     }
 
     @Override
@@ -115,6 +122,11 @@ public class NoteEntityDao extends AbstractDao<NoteEntity, Long> {
         if (name != null) {
             stmt.bindString(5, name);
         }
+ 
+        String title = entity.getTitle();
+        if (title != null) {
+            stmt.bindString(6, title);
+        }
     }
 
     @Override
@@ -129,7 +141,8 @@ public class NoteEntityDao extends AbstractDao<NoteEntity, Long> {
             cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1), // time
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // text
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // type
-            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4) // name
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // name
+            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5) // title
         );
         return entity;
     }
@@ -141,6 +154,7 @@ public class NoteEntityDao extends AbstractDao<NoteEntity, Long> {
         entity.setText(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setType(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setName(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setTitle(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
      }
     
     @Override

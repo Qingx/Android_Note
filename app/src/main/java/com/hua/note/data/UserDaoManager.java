@@ -69,10 +69,11 @@ public class UserDaoManager {
      * @param text
      * @param time
      */
-    public void updateNote(Long id, String text, Long time) {
+    public void updateNote(Long id, String text, Long time, String title) {
         NoteEntity noteEntity = noteDao.queryBuilder().where(NoteEntityDao.Properties.Id.eq(id)).build().unique();
         noteEntity.setText(text);
         noteEntity.setTime(time);
+        noteEntity.setTitle(title);
         noteDao.update(noteEntity);
     }
 
@@ -128,7 +129,13 @@ public class UserDaoManager {
      * @return
      */
     public List<NoteEntity> findListLikeText(String text) {
-        List<NoteEntity> noteList = noteDao.queryBuilder().where(NoteEntityDao.Properties.Text.like("%"+text+"%")).build().list();
+        List<NoteEntity> noteList = noteDao.queryBuilder().where(NoteEntityDao.Properties.Text.like("%" + text + "%")).build().list();
+        Collections.sort(noteList);
+        return noteList;
+    }
+
+    public List<NoteEntity> findListLikeTitle(String text) {
+        List<NoteEntity> noteList = noteDao.queryBuilder().where(NoteEntityDao.Properties.Title.like("%" + text + "%")).build().list();
         Collections.sort(noteList);
         return noteList;
     }

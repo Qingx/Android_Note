@@ -53,26 +53,28 @@ class NoteAdapter(context: Context, entities: MutableList<NoteEntity>) :
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        if (entities[position].name == "default") {
+        val noteEntity = entities[position]
+        val name = noteEntity.name
+
+        if (name == "default") {
             holder.stickyView.visibility = View.INVISIBLE
         } else holder.stickyView.visibility = View.VISIBLE
 
-        holder.text.text = cutStr(entities[position].text, 16)
-        holder.time.text =
-            DateFormat.yearMonthDayTime(entities[position].time) + " " + getWeekDays()
+        if (noteEntity.title == "") {
+            holder.text.text = cutStr(noteEntity.text, 16)
+        } else {
+            holder.text.text = noteEntity.title
+        }
 
-        holder.itemView.setOnClickListener { v: View ->
-            start(context, entities[position].id, "default")
-            (v.context as BaseActivity).overridePendingTransition(
-                android.R.anim.fade_in,
-                android.R.anim.fade_out
-            )
+        holder.time.text =
+            DateFormat.yearMonthDayTime(noteEntity.time) + " " + getWeekDays()
+
+        holder.itemView.setOnClickListener {
+            start(context, noteEntity.id, "default")
+//            (v.context as BaseActivity).overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         }
 
         holder.itemView.setOnLongClickListener { v: View ->
-            val noteEntity = entities[position]
-            val name = noteEntity.name
-
             /**
              * 创建dialog
              */

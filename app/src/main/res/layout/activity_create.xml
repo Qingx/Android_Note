@@ -10,10 +10,10 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_top"
         android:layout_width="0dp"
-        app:layout_constraintHeight_percent="0.12"
         android:layout_height="0dp"
         android:paddingHorizontal="16dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.12"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -29,6 +29,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
+            android:id="@+id/img_theme"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:src="@drawable/ic_theme"
@@ -39,16 +40,34 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <EditText
+        android:id="@+id/edit_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:background="@null"
+        android:hint="标题"
+        android:gravity="left"
+        android:maxEms="16"
+        android:singleLine="true"
+        android:textColor="@color/colorText"
+        android:textColorHint="@color/colorHint"
+        android:textSize="24sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_top" />
+
     <TextView
         android:id="@+id/text_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        tools:text="3月27日 | 63字"
+        android:layout_marginTop="16dp"
         android:textColor="@color/colorHint"
         android:textSize="12sp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout_top" />
+        app:layout_constraintTop_toBottomOf="@id/edit_title"
+        tools:text="3月27日 | 63字" />
 
     <EditText
         android:id="@+id/edit_text"
@@ -58,10 +77,10 @@
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         android:background="@null"
-        android:hint="记事"
-        android:textColorHint="@color/colorHint"
         android:gravity="left|top"
+        android:hint="记事"
         android:textColor="@color/colorText"
+        android:textColorHint="@color/colorHint"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

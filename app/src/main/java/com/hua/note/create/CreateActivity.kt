@@ -53,6 +53,7 @@ class CreateActivity : BaseActivity(), View.OnClickListener {
              */
             val entity: NoteEntity = userDaoManager!!.findNoteById(id)
             edit_text.setText(entity.text)
+            edit_title.setText(entity.title)
             text_time.text =
                 DateFormat.yearMonthDayTime(entity.time) + "  |  " + entity.text.toCharArray().size + "字"
         } else {
@@ -76,6 +77,7 @@ class CreateActivity : BaseActivity(), View.OnClickListener {
         })
 
         img_top_left.setOnClickListener(this)
+        img_theme.setOnClickListener(this)
     }
 
     override fun getLayoutResource(): Any {
@@ -94,35 +96,42 @@ class CreateActivity : BaseActivity(), View.OnClickListener {
                 if (Tools.isWordChanged(
                         noteEntity.text,
                         edit_text.text.toString().trim()
-                    )
+                    ) && Tools.isWordChanged(noteEntity.title, edit_title.text.toString().trim())
                 ) {
                     Times.current()
                 } else {
                     noteEntity.time
                 }
-            userDaoManager!!.updateNote(id, edit_text.text.toString().trim(), changeTime)
+            userDaoManager!!.updateNote(
+                id,
+                edit_text.text.toString().trim(),
+                changeTime,
+                edit_title.text.toString().trim()
+            )
         } else {
             /**
              * 新建便签
              */
-            if (edit_text.text.toString().trim() != "") {
+            if (edit_text.text.toString().trim() != "" || edit_title.text.toString().trim() != "") {
                 val noteEntity = NoteEntity(
                     Times.current(),
                     Times.current(),
                     edit_text.text.toString().trim(),
                     "default",
-                    userName
+                    userName,
+                    edit_title.text.toString().trim()
                 )
                 userDaoManager!!.insertNote(noteEntity)
             }
         }
         EventBus.getDefault().post(MessageEvent("updateAdapter"))
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+//        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
     }
 
     override fun onClick(v: View?) {
         when (v!!.id) {
             R.id.img_top_left -> onBackPressed()
+            R.id.img_theme -> Tools.myToast(applicationContext, "敬请期待")
         }
     }
 }
