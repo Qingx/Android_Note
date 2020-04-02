@@ -51,6 +51,7 @@ dependencies {
     implementation 'com.github.Iaovy:Base-Frame:v1.0.0'
 
     implementation 'me.everything:overscroll-decor-android:1.0.4'
+    implementation 'jp.wasabeef:richeditor-android:1.2.2'
 }
 repositories {
     mavenCentral()
