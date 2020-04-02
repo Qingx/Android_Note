@@ -22,13 +22,13 @@ class StartActivity : AppCompatActivity() {
                     NoteEntity(
                         Times.current(),
                         Times.current(),
-                        "富文本正在开发中，敬请期待\uD83D\uDE00\n" +
+                        "富文本正在开发中，敬请期待\n" +
                                 "\n" +
                                 "\n" +
                                 "Copyright2020 花束爱山毛榉",
                         "default",
                         "default",
-                        "欢迎使用便签"
+                        "欢迎使用便签\uD83D\uDE00"
                     )
                 userDaoManager.insertNote(defaultEntity)
                 val editor: SharedPreferences.Editor? = sharedPreferences.edit()
