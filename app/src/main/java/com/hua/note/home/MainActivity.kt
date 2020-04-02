@@ -79,7 +79,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
             }
             R.id.layout_search -> {
                 SearchActivity.start(applicationContext)
-//                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
             }
         }
     }
