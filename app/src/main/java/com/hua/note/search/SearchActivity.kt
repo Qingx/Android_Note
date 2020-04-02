@@ -13,7 +13,6 @@ import com.hua.note.data.NoteEntity
 import com.hua.note.data.UserDaoManager
 import com.hua.note.home.NoteAdapter
 import kotlinx.android.synthetic.main.activity_search.*
-import java.util.*
 
 class SearchActivity : BaseActivity(), View.OnClickListener {
     private var userDaoManager: UserDaoManager? = null
@@ -59,10 +58,16 @@ class SearchActivity : BaseActivity(), View.OnClickListener {
                             object : LinearLayoutManager(applicationContext) {}
                         text_result.visibility = View.INVISIBLE
                     } else {
+                        /**
+                         * 未找到
+                         */
                         recyler_search.visibility = View.INVISIBLE
                         text_result.visibility = View.VISIBLE
                     }
                 } else {
+                    /**
+                     * 未输入关键词
+                     */
                     recyler_search.visibility = View.INVISIBLE
                     text_result.visibility = View.INVISIBLE
                 }
